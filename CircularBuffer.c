@@ -14,7 +14,6 @@ struct circular_buf_t {
 	bool full;
 };
 
-#pragma mark - Private Functions -
 
 static void advance_pointer(cbuf_handle_t cbuf)
 {
@@ -39,7 +38,6 @@ static void retreat_pointer(cbuf_handle_t cbuf)
 	cbuf->tail = (cbuf->tail + 1) % cbuf->max;
 }
 
-#pragma mark - APIs -
 
 cbuf_handle_t circular_buf_init(uint8_t* buffer, size_t size)
 {

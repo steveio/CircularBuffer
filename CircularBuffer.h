@@ -2,7 +2,7 @@
 
 CircularBuffer.h
 
-Implements a ring buffer in c
+Implements a C/C++ ring buffer
 
 Useage:
 
@@ -12,14 +12,18 @@ for(uint8_t i = 0; i < (BUFFER_SIZE - 1); i++)
 {
   circular_buf_put(cbuf, i);
 }
-
 */
 
 
 #ifndef CIRCULAR_BUFFER_H_
 #define CIRCULAR_BUFFER_H_
 
-#include <stdbool.h>
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+#include <Arduino.h> // capital A so it is error prone on case-sensitive filesystems
+
 
 /// Opaque circular buffer structure
 typedef struct circular_buf_t circular_buf_t;
@@ -31,6 +35,9 @@ typedef circular_buf_t* cbuf_handle_t;
 /// Requires: buffer is not NULL, size > 0
 /// Ensures: cbuf has been created and is returned in an empty state
 cbuf_handle_t circular_buf_init(uint8_t* buffer, size_t size);
+
+
+void print_buffer_status(cbuf_handle_t cbuf);
 
 /// Free a circular buffer structure
 /// Requires: cbuf is valid and created by circular_buf_init
@@ -78,5 +85,9 @@ size_t circular_buf_size(cbuf_handle_t cbuf);
 
 //TODO: int circular_buf_get_range(circular_buf_t cbuf, uint8_t *data, size_t len);
 //TODO: int circular_buf_put_range(circular_buf_t cbuf, uint8_t * data, size_t len);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif //CIRCULAR_BUFFER_H_
